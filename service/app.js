@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const path = require('path');
@@ -28,7 +29,7 @@ const storage = {
   // This is the environment client secret
   clientSecret: "es33SiFOzMaaZ6KQ57jQ7L167owt2KOeaJq0BXEEdtlcY6V5",
   // This is your service port
-  port: 3001,
+  port: 3000,
   // This is needed as a header to authorize requests
   apiKey: "iB4b9IG8536FQCKiPlyXL9wJYfKbALKT4GZW9VGu"
 };
@@ -37,6 +38,14 @@ const storage = {
 app.use(express.static('webapp', {
   extensions: ['html', 'htm']
 }));
+
+app.use(cors());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());

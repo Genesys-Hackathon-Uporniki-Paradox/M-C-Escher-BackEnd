@@ -13,7 +13,7 @@ module.exports = function (app, nlp, sessionPath, sessionClient) {
         }
     });
 
-    app.post('/question/text', async (req, res) => {
+    app.post('/question/text', async (req, res, next) => {
         try {
             const queryText = req.body.queryText;
             const languageCode = req.body.languageCode;
@@ -23,5 +23,9 @@ module.exports = function (app, nlp, sessionPath, sessionClient) {
         } catch (error) {
             throw error;
         }
+    });
+
+    app.options('/question/text', async (req, res) => {
+        res.send(200);
     });
 };
