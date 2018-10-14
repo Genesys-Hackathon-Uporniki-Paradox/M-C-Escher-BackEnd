@@ -6,9 +6,24 @@ module.exports = function (app, nlp, sessionPath, sessionClient) {
             const sampleRateHertz = req.body.sampleRateHertz;
             const languageCode = req.body.languageCode;
 
-            nlp.detectAudioIntent(sessionPath, sessionClient, encodedAudio, encoding, sampleRateHertz, languageCode);
+            const result = nlp.detectAudioIntent(sessionPath, sessionClient, encodedAudio, encoding, sampleRateHertz, languageCode);
+
+            res.send(result);
         } catch (error) {
-            res.send(error);
+            throw error;
+        }
+    });
+
+    app.post('/question/text', async(req, res) => {
+        try {
+            const queryText = req.body.queryText;
+            const languageCode = req.body.languageCode;
+
+            const result = nlp.detectTextIntent(sessionPath, sessionClient, queryText, languageCode);
+
+            res.send(result);
+        } catch (error) {
+            throw error;
         }
     });
 };
