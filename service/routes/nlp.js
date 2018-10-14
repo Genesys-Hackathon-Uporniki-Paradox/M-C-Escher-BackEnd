@@ -19,7 +19,7 @@ module.exports = function (app, nlp, sessionPath, sessionClient) {
             const languageCode = req.body.languageCode;
 
             nlp.detectTextIntent(sessionPath, sessionClient, queryText, languageCode)
-                .then(responses => res.send(responses));
+                .then(responses => res.send({response: responses[0].queryResult.fulfillmentText}));
         } catch (error) {
             throw error;
         }
